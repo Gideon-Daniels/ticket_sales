@@ -34,9 +34,9 @@ class ClcTicketSales:
         self.calculate_ticket_button = Button(window, text="Calculate Ticket", command=self.calc_prepayment)
         self.clear_entries_button = Button(window, text="Clear", command=self.clear)
         # Output
-        self.output_label_1 = Label(window, text="", textvariable=self.price, bg="#fff")
-        self.output_label_2 = Label(window, text="", textvariable=self.num_of_tickets, bg="#fff")
-        self.output_label_3 = Label(window, text="", textvariable=self.cell_num, bg="#fff")
+        self.output_label_1 = Label(window, text="", textvariable=self.price)
+        self.output_label_2 = Label(window, text="", textvariable=self.num_of_tickets)
+        self.output_label_3 = Label(window, text="", textvariable=self.cell_num)
         self.output_pattern_top = Label(window, text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
         self.output_pattern_bottom = Label(window, text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
         # Placing
@@ -52,42 +52,41 @@ class ClcTicketSales:
         self.clear_entries_button.place(x=350, y=325)
         # Output
         self.output_pattern_top.place(x=10, y=360)
-        self.output_label_1.place(x=10, y=400)
-        self.output_label_2.place(x=10, y=425)
-        self.output_label_3.place(x=10, y=450)
+        self.output_label_1.place(x=100, y=400)
+        self.output_label_2.place(x=100, y=425)
+        self.output_label_3.place(x=100, y=450)
         self.output_pattern_bottom.place(x=10, y=490)
     # Functions
 
     def calc_prepayment(self):
-        # if self.cell_num_entry.get().isdigit() == False or len(self.cell_num_entry.get()) < 10:
-        #     messagebox.showerror("warning", "write the correct cellphone number")
-        # elif int(self.number_of_tickets_bought.get() == 0):
-        #     messagebox.showerror("warning", "Please select your number of tickets")
-        # elif self.select_ticket_category.get() == "Choose an category":
-        #     messagebox.showerror("warning", "choose an option")
+        try:
+            if self.select_ticket_category.get() == "Soccer":
+                pay_me = float(self.number_of_tickets_bought.get()) * 40 + 0.14 * (
+                            float(self.number_of_tickets_bought.get()) * 40)
+                self.price.set("Amount Payable: R" + str(pay_me))
+                self.num_of_tickets.set(
+                    "Reservation for " + self.select_ticket_category.get() + " for " + self.number_of_tickets_bought.get())
+                self.cell_num.set("was done by " + self.cell_num_entry.get())
 
-        if self.select_ticket_category.get() == "Soccer":
-            price = 40
-            cost = float(self.num_of_tickets.get()) * price + (price * 0.14)
-            self.price.set("Amount payable: R" + str(cost))
-            self.cell_num.set("Reservation for " + self.select_ticket_category.get() + " for " + str(
-                self.number_of_tickets_bought.get()))
-            self.cell_num.set("was done by " + str(self.cell_num_entry.get()))
-            #messagebox.showinfo("Test", self.price)
-        elif self.select_ticket_category.get() == "Movies":
-            price = 75
-            cost = float(self.num_of_tickets.get()) * price + 14 / 100
-            self.price.set("Amount payable: R" + str(cost))
-            self.cell_num.set("Reservation for " + self.select_ticket_category.get() + " for " + str(
-                self.number_of_tickets_bought.get()))
-            self.cell_num.set("was done by " + str(self.cell_num_entry.get()))
-        elif self.select_ticket_category.get() == "Theater":
-            price = 100
-            cost = float(self.num_of_tickets.get()) * price + 14 / 100
-            self.price.set("Amount payable: R" + str(cost))
-            self.cell_num.set("Reservation for " + self.select_ticket_category.get() + " for " + str(
-                self.number_of_tickets_bought.get()))
-            self.cell_num.set("was done by " + str(self.cell_num_entry.get()))
+            elif self.select_ticket_category.get() == "Movie":
+                pay_me = float(self.number_of_tickets_bought.get()) * 75 + 0.14 * (
+                            float(self.number_of_tickets_bought.get()) * 75)
+                self.price.set("Amount Payable: R" + str(pay_me))
+                self.num_of_tickets.set(
+                    "Reservation for " + self.select_ticket_category.get() + " for " + self.number_of_tickets_bought.get())
+                self.cell_num.set("was done by " + self.cell_num_entry.get())
+
+            elif self.select_ticket_category.get() == "Theatre":
+                pay_me = float(self.number_of_tickets_bought.get()) * 100 + 0.14 * (
+                            float(self.number_of_tickets_bought.get()) * 100)
+                self.price.set("Amount Payable: R" + str(pay_me))
+                self.num_of_tickets.set(
+                    "Reservation for " + self.select_ticket_category.get() + " for " + self.number_of_tickets_bought.get())
+                self.cell_num.set("was done by " + self.cell_num_entry.get())
+
+        except ValueError:
+            messagebox.showerror("error", "Invalid input. Please try again.")
+
 
 
     def clear(self):
