@@ -15,7 +15,7 @@ window.geometry("500x600")
 class ClcTicketSales:
     cell_num = StringVar()
     price = StringVar()
-    num_of_tickets = IntVar()
+    num_of_tickets = StringVar()
     variable = StringVar()
     variable.set("Choose an category")
 
